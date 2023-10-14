@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<link rel="stylesheet" href="style.css">
+
+<head>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+   <script src="index.js"></script>
+
+
+   <title>Digits</title>
+   <link rel="icon" type="image/png" href="logo.png" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F4DKLBGXQV"></script>
+<script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag() { dataLayer.push(arguments); }
+   gtag('js', new Date());
+
+   gtag('config', 'G-F4DKLBGXQV');
+</script>
+
+<body class="startScreen">
+   <div class="center-screen">
+
+      <img src="logo.png" class="logo">
+      <h1 class="title"><b>Digits</b></h1>
+      <p class="description">A daily numbers puzzle</p>
+      <button class="play" onclick="location.href='game.html'">Play</button>
+      <br>
+      <button class="play" onclick="location.href='challenge.html'">Challenge</button>
+      <p id="current_date"></p>
+      <script>
+         date = new Date();
+         year = date.getFullYear();
+         month = date.getMonth() + 1;
+         day = date.getDate();
+         document.getElementById("current_date").innerHTML = month + "/" + day + "/" + year;
+      </script>
+   </div>
+</body>
