@@ -345,6 +345,7 @@ function changeClass(id) {
       });
    }
 
+   //Win condition
    allNums.forEach(button => {
       if (button.innerHTML == targetNum) {
          //$('#' + id).addClass('match');
@@ -366,10 +367,35 @@ function changeClass(id) {
    console.log("13: " + num1);
 }
 
+/*const games = require('./database');
+
+function getRandomGame() {
+   const randomIndex = Math.floor(Math.random() * games.length);
+   return games[randomIndex].game;
+}*/
+
+/*fetch('./database.js')
+  .then(response => response.json())
+  .then(data => {
+    const games = data;
+
+    // Function to get a random game from the games array
+    function getRandomGame() {
+      const randomIndex = Math.floor(Math.random() * games.length);
+      return games[randomIndex].game;
+    }
+   
+    listNums = getRandomGame();
+    console.log('game got: ', listNums);
+   });
+
 function challenge() {
    console.log(newdate);
 
-   listNums = [343, 3, 7, 22, 14, 10, 5];
+   console.log('Test nums: ', listNums);
+
+   //listNums = [343, 3, 7, 22, 14, 10, 5];
+   //listNums = getRandomGame();
 
    targetNum = listNums[0];
    num1 = listNums[1];
@@ -387,4 +413,41 @@ function challenge() {
    document.getElementById("button5").innerHTML = num5;
    document.getElementById("button6").innerHTML = num6;
 
+}*/
+fetch('./database.js')
+  .then(response => response.json())
+  .then(data => {
+    const listNums = getRandomGame(data);
+
+    console.log('game got: ', listNums);
+
+    function challenge() {
+      console.log(newdate);
+
+      console.log('Test nums: ', listNums);
+
+      targetNum = listNums[0];
+      num1 = listNums[1];
+      num2 = listNums[2];
+      num3 = listNums[3];
+      num4 = listNums[4];
+      num5 = listNums[5];
+      num6 = listNums[6];
+
+      document.getElementById("targetNumber").innerHTML = targetNum;
+      document.getElementById("button1").innerHTML = num1;
+      document.getElementById("button2").innerHTML = num2;
+      document.getElementById("button3").innerHTML = num3;
+      document.getElementById("button4").innerHTML = num4;
+      document.getElementById("button5").innerHTML = num5;
+      document.getElementById("button6").innerHTML = num6;
+    }
+
+    challenge(); // Call the challenge function here to ensure it has access to listNums
+  });
+
+function getRandomGame(data) {
+  const randomIndex = Math.floor(Math.random() * data.length);
+  return data[randomIndex].game;
 }
+
