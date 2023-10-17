@@ -26,6 +26,8 @@ let states = [];
 let currentState = {};
 let activatedStates = [];
 let currentActivated = {};
+let stage = 1;
+let totalScore = [];
 
 function main(gameNum) {
    console.log(gameNum);
@@ -232,7 +234,14 @@ function changeClass(id) {
                }
                madeMove = true;
                console.log(newNum);
-
+            
+               score = 0;
+               if (newNum <= targetNum)
+                  score = Math.floor(newNum * 5 / targetNum);
+               else
+                  score = 5 - Math.ceil((newNum - targetNum) / targetNum);
+                  score = score >= 0 ? score : 0; 
+               document.getElementById("score").innerHTML = "current score: "+score+" out of 5";
 
                document.getElementById(id).innerHTML = newNum;
 
@@ -414,6 +423,29 @@ function challenge() {
    document.getElementById("button6").innerHTML = num6;
 
 }*/
+function challenge() {
+   console.log(newdate);
+
+   console.log('Test nums: ', listNums);
+
+   targetNum = listNums[0];
+   num1 = listNums[1];
+   num2 = listNums[2];
+   num3 = listNums[3];
+   num4 = listNums[4];
+   num5 = listNums[5];
+   num6 = listNums[6];
+
+   document.getElementById("targetNumber").innerHTML = targetNum;
+   document.getElementById("button1").innerHTML = num1;
+   document.getElementById("button2").innerHTML = num2;
+   document.getElementById("button3").innerHTML = num3;
+   document.getElementById("button4").innerHTML = num4;
+   document.getElementById("button5").innerHTML = num5;
+   document.getElementById("button6").innerHTML = num6;
+   document.getElementById("score").innerHTML = "current score: 0 out of 5";
+ 
+}
 fetch('./database.js')
   .then(response => response.json())
   .then(data => {
@@ -441,7 +473,9 @@ fetch('./database.js')
       document.getElementById("button4").innerHTML = num4;
       document.getElementById("button5").innerHTML = num5;
       document.getElementById("button6").innerHTML = num6;
-    }
+      document.getElementById("score").innerHTML = "current score: 0 out of 5";
+    
+   }
 
     challenge(); // Call the challenge function here to ensure it has access to listNums
   });
@@ -449,5 +483,33 @@ fetch('./database.js')
 function getRandomGame(data) {
   const randomIndex = Math.floor(Math.random() * data.length);
   return data[randomIndex].game;
+}
+
+function nextGame(){
+   stage = stage + 1;
+   score = Number(document.getElementById("score").innerHTML.match(/\d+/)[0]) ;
+   totalScore.push(score);
+   console.log(totalScore);
+
+   if ($('#button1').hasClass('gettingUsed')) {
+      $('#button1').removeClass('gettingUsed')
+   }
+   if ($('#button2').hasClass('gettingUsed')) {
+      $('#button2').removeClass('gettingUsed')
+   }
+   if ($('#button3').hasClass('gettingUsed')) {
+      $('#button3').removeClass('gettingUsed')
+   }
+   if ($('#button4').hasClass('gettingUsed')) {
+      $('#button4').removeClass('gettingUsed')
+   }
+   if ($('#button5').hasClass('gettingUsed')) {
+      $('#button5').removeClass('gettingUsed')
+   }
+   if ($('#button6').hasClass('gettingUsed')) {
+      $('#button6').removeClass('gettingUsed')
+   }
+   // challenge();
+   // call fetch function to generate random and render
 }
 
