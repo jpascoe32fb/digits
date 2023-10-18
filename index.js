@@ -486,6 +486,14 @@ function getRandomGame(data) {
 }
 
 function nextGame(){
+   if(stage == 5){
+      sum = 0;
+      for (var i = 0; i < totalScore.length; i++) {
+         sum += totalScore[i];
+       }
+      var userInput = prompt("your final score: " + sum + " \nPlease enter your name:", "Default Text");
+      return 0;
+   }
    stage = stage + 1;
    score = Number(document.getElementById("score").innerHTML.match(/\d+/)[0]) ;
    totalScore.push(score);
@@ -509,7 +517,40 @@ function nextGame(){
    if ($('#button6').hasClass('gettingUsed')) {
       $('#button6').removeClass('gettingUsed')
    }
-   // challenge();
+   
    // call fetch function to generate random and render
+   fetch('./database.js')
+  .then(response => response.json())
+  .then(data => {
+    const listNums = getRandomGame(data);
+
+    console.log('game got: ', listNums);
+
+    function challenge() {
+      console.log(newdate);
+
+      console.log('Test nums: ', listNums);
+
+      targetNum = listNums[0];
+      num1 = listNums[1];
+      num2 = listNums[2];
+      num3 = listNums[3];
+      num4 = listNums[4];
+      num5 = listNums[5];
+      num6 = listNums[6];
+
+      document.getElementById("targetNumber").innerHTML = targetNum;
+      document.getElementById("button1").innerHTML = num1;
+      document.getElementById("button2").innerHTML = num2;
+      document.getElementById("button3").innerHTML = num3;
+      document.getElementById("button4").innerHTML = num4;
+      document.getElementById("button5").innerHTML = num5;
+      document.getElementById("button6").innerHTML = num6;
+      document.getElementById("score").innerHTML = "current score: 0 out of 5";
+    
+   }
+
+    challenge(); // Call the challenge function here to ensure it has access to listNums
+  });
 }
 
