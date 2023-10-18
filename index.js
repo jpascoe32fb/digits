@@ -30,56 +30,6 @@ let currentActivated = {};
 function main(gameNum) {
    console.log(gameNum);
 
-   if (newdate == '2023/8/31') {
-      listNums0 = [297, 1, 8, 3, 18, 14, 7];
-      listNums1 = [224, 5, 16, 9, 7, 6, 20];
-      listNums2 = [304, 12, 17, 4, 6, 5, 16];
-   }
-   if (newdate == '2023/9/1') {
-     listNums0 = [459, 15, 21, 12, 9, 8, 7];
-     listNums1 = [101, 10, 24, 20, 3, 8, 12];
-     listNums2 = [370, 23, 16, 3, 2, 8, 7];
-   }
-   if (newdate == '2023/9/2') {
-     listNums0 = [350, 3, 1, 14, 12, 8, 4];
-     listNums1 = [378, 8, 5, 7, 22, 1, 19];
-     listNums2 = [55, 6, 12, 21, 7, 5, 2];
-   }
-   if (newdate == '2023/9/3') {
-     listNums0 = [424, 5, 4, 9, 13, 1, 15];
-     listNums1 = [202, 12, 22, 6, 8, 3, 11];
-     listNums2 = [448, 7, 1, 5, 13, 8, 18];
-   }
-   if (newdate == '2023/9/4') {
-     listNums0 = [473, 22, 5, 8, 11, 1, 6];
-     listNums1 = [169, 8, 14, 9, 7, 1, 22];
-     listNums2 = [405, 15, 9, 4, 8, 21, 12];
-   }
-   if (newdate == '2023/9/5') {
-     listNums0 = [494, 13, 9, 8, 7, 19, 6];
-     listNums1 = [388, 20, 3, 6, 16, 1, 7];
-     listNums2 = [182, 1, 5, 19, 14, 6, 4];
-   }
-   if (newdate == '2023/9/6') {
-     listNums0 = [358, 7, 18, 4, 24, 6, 2];
-     listNums1 = [416, 11, 14, 5, 1, 13, 17];
-     listNums2 = [71, 1, 7, 2, 8, 22, 3];
-   }
-   if (newdate == '2023/9/7') {
-     listNums0 = [102, 12, 5, 21, 10, 20, 7];
-     listNums1 = [494, 10, 1, 6, 4, 25, 21];
-     listNums2 = [366, 20, 2, 12, 1, 7, 21];
-   }
-   if (newdate == '2023/9/8') {
-     listNums0 = [302, 15, 8, 2, 20, 4, 1];
-     listNums1 = [326, 17, 3, 4, 9, 16, 8];
-     listNums2 = [194, 6, 24, 17, 10, 1, 9];
-   }
-   if (newdate == '2023/9/9') {
-     listNums0 = [97, 3, 21, 11, 4, 9, 10];
-     listNums1 = [388, 20, 9, 3, 8, 21, 7];
-     listNums2 = [117, 7, 6, 25, 19, 8, 4];
-   }
    if (gameNum == 0) {
       targetNum = listNums0[0];
       num1 = listNums0[1];
@@ -107,7 +57,6 @@ function main(gameNum) {
       num5 = listNums2[5];
       num6 = listNums2[6];
    }
-
 
    document.getElementById("targetNumber").innerHTML = targetNum;
    document.getElementById("button1").innerHTML = num1;
@@ -141,12 +90,14 @@ function changeClass(id) {
 
    selectedNums.forEach(num => {
       isNumSelected = true;
+      //currentState[num] = true;
    });
    selectedSyms.forEach(sym => {
       isSymbolSelected = true;
    });
 
    console.log("4: " + num1);
+   console.log("id: ", id);
    if ($('#' + id).hasClass('unselectedSymbol')) {
       if (isNumSelected) {
          $('#' + id).removeClass('unselectedSymbol');
@@ -253,7 +204,7 @@ function changeClass(id) {
          sym.classList.add("unselectedSymbol");
       });
       console.log("10: " + num1);
-   } else if ($('#' + id).hasClass('undoButton')) {
+   } else if ($('#' + id).hasClass('undoButton')) { //doesn't properly undo if node last changed is unselected
       currentState = states[states.length - 1];
       console.log("hhhhh: " + currentState["num1"][0]);
       if (currentState != undefined) {
@@ -313,7 +264,7 @@ function changeClass(id) {
             document.getElementById('button6').innerHTML = currentState["num6"][0];
          }
          states.splice(states.length - 1, 1);
-         console.log(states);
+         console.log("states", states);
       }
    }
 
@@ -321,7 +272,7 @@ function changeClass(id) {
    if (madeMove) {
       console.log("12: " + num1);
       states.push(currentState);
-      console.log(states);
+      console.log("Made Move states", states);
       let hiddenNums = document.querySelectorAll('.gettingUsed');
       hiddenNums.forEach(n => {
          if (n.id == "button1") {
@@ -358,6 +309,8 @@ function changeClass(id) {
          if (window.location.href == "https://conder13.github.io/digits/game2.html") {
             setTimeout(() => { window.location.href = "end.html"; }, 1800);
          }
+         console.log("WIN!!");
+         //nextGame();
 
 
       }
@@ -414,6 +367,7 @@ function challenge() {
    document.getElementById("button6").innerHTML = num6;
 
 }*/
+
 fetch('./database.js')
   .then(response => response.json())
   .then(data => {
@@ -442,9 +396,40 @@ fetch('./database.js')
       document.getElementById("button5").innerHTML = num5;
       document.getElementById("button6").innerHTML = num6;
     }
-
-    challenge(); // Call the challenge function here to ensure it has access to listNums
+    challenge(); 
   });
+
+  function nextGame() {
+   fetch('./database.js')
+     .then(response => response.json())
+     .then(data => {
+       const listNums = getRandomGame(data);
+   
+       console.log('game got: ', listNums);
+   
+       function challenge() {
+         console.log(newdate);
+   
+         console.log('Test nums: ', listNums);
+   
+         targetNum = listNums[0];
+         num1 = listNums[1];
+         num2 = listNums[2];
+         num3 = listNums[3];
+         num4 = listNums[4];
+         num5 = listNums[5];
+         num6 = listNums[6];
+   
+         document.getElementById("targetNumber").innerHTML = targetNum;
+         document.getElementById("button1").innerHTML = num1;
+         document.getElementById("button2").innerHTML = num2;
+         document.getElementById("button3").innerHTML = num3;
+         document.getElementById("button4").innerHTML = num4;
+         document.getElementById("button5").innerHTML = num5;
+         document.getElementById("button6").innerHTML = num6;
+       }
+       challenge(); 
+     });}
 
 function getRandomGame(data) {
   const randomIndex = Math.floor(Math.random() * data.length);
