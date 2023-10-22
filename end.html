@@ -5,7 +5,8 @@
 
 <head>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-   <script>setTimeout(() => { window.location.href = "index.html"; }, 6000);</script>
+   <script src="index.js"></script>
+   <script>setTimeout(() => { window.location.href = "index.html"; }, 10000);</script>
 
 
    <title>Digits</title>
@@ -19,9 +20,11 @@
    gtag('js', new Date());
 
    gtag('config', 'G-F4DKLBGXQV');
+   console.log(document.querySelector('.winText')) ;
 </script>
 
 <body class="endScreen">
    <br>
    <p class="winText">Genius!<br>Come back tomorow for another puzzle.</p>
+   <script>endPrompt();</script>
 </body>

@@ -26,6 +26,9 @@ let states = [];
 let currentState = {};
 let activatedStates = [];
 let currentActivated = {};
+let stage = 1;
+let score = 0;
+let totalScore = [];
 
 function main(gameNum) {
    console.log(gameNum);
@@ -183,7 +186,14 @@ function changeClass(id) {
                }
                madeMove = true;
                console.log(newNum);
-
+               //score = 0;
+               if (newNum <= targetNum)
+                  score = Math.floor(newNum * 5 / targetNum);
+               else
+                  score = 5 - Math.ceil((newNum - targetNum) / targetNum);
+                  score = score >= 0 ? score : 0; 
+               document.getElementById("score").innerHTML = "current score: "+score+" out of 5";
+               rateStarChange();
 
                document.getElementById(id).innerHTML = newNum;
 
@@ -265,7 +275,10 @@ function changeClass(id) {
          }
          states.splice(states.length - 1, 1);
          console.log("states", states);
+         var currentnum = document.getElementById('targetNumber').innerHTML;
+         console.log(currentnum);
       }
+      console.log(newNum)
    }
 
 
@@ -395,11 +408,50 @@ fetch('./database.js')
       document.getElementById("button4").innerHTML = num4;
       document.getElementById("button5").innerHTML = num5;
       document.getElementById("button6").innerHTML = num6;
+      document.getElementById("star-null").checked = true;
+
     }
     challenge(); 
   });
 
   function nextGame() {
+   if(stage == 5){
+      sum = 0;
+      for (var i = 0; i < totalScore.length; i++) {
+         sum += totalScore[i];
+      }
+       location.href='end.html?data='+sum
+       return 0;
+   }
+   stage = stage + 1;
+   scoreText = document.getElementById("score").innerHTML;
+   if (scoreText != "" && scoreText != null)
+   {
+      console.log("scoreText:" + scoreText);
+      score = Number(document.getElementById("score").innerHTML.match(/\d+/)[0]) ;
+      totalScore.push(score);
+      console.log(totalScore);
+   }
+
+   if ($('#button1').hasClass('gettingUsed')) {
+      $('#button1').removeClass('gettingUsed')
+   }
+   if ($('#button2').hasClass('gettingUsed')) {
+      $('#button2').removeClass('gettingUsed')
+   }
+   if ($('#button3').hasClass('gettingUsed')) {
+      $('#button3').removeClass('gettingUsed')
+   }
+   if ($('#button4').hasClass('gettingUsed')) {
+      $('#button4').removeClass('gettingUsed')
+   }
+   if ($('#button5').hasClass('gettingUsed')) {
+      $('#button5').removeClass('gettingUsed')
+   }
+   if ($('#button6').hasClass('gettingUsed')) {
+      $('#button6').removeClass('gettingUsed')
+   }
+
    fetch('./database.js')
      .then(response => response.json())
      .then(data => {
@@ -427,6 +479,10 @@ fetch('./database.js')
          document.getElementById("button4").innerHTML = num4;
          document.getElementById("button5").innerHTML = num5;
          document.getElementById("button6").innerHTML = num6;
+         document.getElementById("score").innerHTML = "current score: 0 out of 5";
+         document.getElementById("star-null").checked = true;
+
+
        }
        challenge(); 
      });}
@@ -436,3 +492,24 @@ function getRandomGame(data) {
   return data[randomIndex].game;
 }
 
+function rateStarChange(){
+   console.log(score)
+   if(score != 0)
+      document.getElementById("star-"+score).checked = true;
+}
+
+function endPrompt(){
+   const urlParams = new URLSearchParams(window.location.search);
+   const sum = urlParams.get('data');
+   console.log(sum);
+   var p = document.querySelector('.winText');
+   if (sum == 25)
+      p.textContent = 'Genius!Come back tomorow for another puzzle.';
+   else if (sum < 25 && sum >=20)
+      p.textContent = 'Genius!Come back tomorow for another puzzle.';
+   else if (sum < 20 && sum >=15)
+      p.textContent = 'Good!Come back tomorow for another puzzle.';
+   else
+      p.textContent = 'Fair!Come back tomorow for another puzzle.';
+    
+}
