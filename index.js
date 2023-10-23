@@ -26,9 +26,9 @@ let states = [];
 let currentState = {};
 let activatedStates = [];
 let currentActivated = {};
-let stage = 1;
+
+let win = false;
 let score = 0;
-let totalScore = [];
 
 function main(gameNum) {
    console.log(gameNum);
@@ -186,14 +186,7 @@ function changeClass(id) {
                }
                madeMove = true;
                console.log(newNum);
-               //score = 0;
-               if (newNum <= targetNum)
-                  score = Math.floor(newNum * 5 / targetNum);
-               else
-                  score = 5 - Math.ceil((newNum - targetNum) / targetNum);
-                  score = score >= 0 ? score : 0; 
-               document.getElementById("score").innerHTML = "current score: "+score+" out of 5";
-               rateStarChange();
+
 
                document.getElementById(id).innerHTML = newNum;
 
@@ -214,9 +207,9 @@ function changeClass(id) {
          sym.classList.add("unselectedSymbol");
       });
       console.log("10: " + num1);
-   } else if ($('#' + id).hasClass('undoButton')) { //doesn't properly undo if node last changed is unselected
-      currentState = states[states.length - 1];
-      console.log("hhhhh: " + currentState["num1"][0]);
+   } else if ($('#' + id).hasClass('undoButton')) { 
+      currentState = states.pop();
+      if(currentState) console.log("hhhhh: " + currentState["num1"][0]);
       if (currentState != undefined) {
          if (currentState["num1"][1] == true) {
             if ($('#button1').hasClass('gettingUsed')) {
@@ -226,8 +219,9 @@ function changeClass(id) {
             if ($('#button1').hasClass('gettingChanged')) {
                $('#button1').removeClass('gettingChanged')
             }
-            document.getElementById('button1').innerHTML = currentState["num1"][0];
+            //document.getElementById('button1').innerHTML = currentState["num1"][0];
          }
+         document.getElementById('button1').innerHTML = currentState["num1"][0];
          if (currentState["num2"][1] == true) {
             if ($('#button2').hasClass('gettingUsed')) {
                $('#button2').removeClass('gettingUsed')
@@ -235,8 +229,9 @@ function changeClass(id) {
             if ($('#button2').hasClass('gettingChanged')) {
                $('#button2').removeClass('gettingChanged')
             }
-            document.getElementById('button2').innerHTML = currentState["num2"][0];
+            //document.getElementById('button2').innerHTML = currentState["num2"][0];
          }
+         document.getElementById('button2').innerHTML = currentState["num2"][0];
          if (currentState["num3"][1] == true) {
             if ($('#button3').hasClass('gettingUsed')) {
                $('#button3').removeClass('gettingUsed')
@@ -244,8 +239,9 @@ function changeClass(id) {
             if ($('#button3').hasClass('gettingChanged')) {
                $('#button3').removeClass('gettingChanged')
             }
-            document.getElementById('button3').innerHTML = currentState["num3"][0];
+            //document.getElementById('button3').innerHTML = currentState["num3"][0];
          }
+         document.getElementById('button3').innerHTML = currentState["num3"][0];
          if (currentState["num4"][1] == true) {
             if ($('#button4').hasClass('gettingUsed')) {
                $('#button4').removeClass('gettingUsed')
@@ -253,8 +249,9 @@ function changeClass(id) {
             if ($('#button4').hasClass('gettingChanged')) {
                $('#button4').removeClass('gettingChanged')
             }
-            document.getElementById('button4').innerHTML = currentState["num4"][0];
+            //document.getElementById('button4').innerHTML = currentState["num4"][0];
          }
+         document.getElementById('button4').innerHTML = currentState["num4"][0];
          if (currentState["num5"][1] == true) {
             if ($('#button5').hasClass('gettingUsed')) {
                $('#button5').removeClass('gettingUsed')
@@ -262,8 +259,9 @@ function changeClass(id) {
             if ($('#button5').hasClass('gettingChanged')) {
                $('#button5').removeClass('gettingChanged')
             }
-            document.getElementById('button5').innerHTML = currentState["num5"][0];
+            //document.getElementById('button5').innerHTML = currentState["num5"][0];
          }
+         document.getElementById('button5').innerHTML = currentState["num5"][0];
          if (currentState["num6"][1] == true) {
             if ($('#button6').hasClass('gettingUsed')) {
                $('#button6').removeClass('gettingUsed')
@@ -271,14 +269,20 @@ function changeClass(id) {
             if ($('#button6').hasClass('gettingChanged')) {
                $('#button6').removeClass('gettingChanged')
             }
-            document.getElementById('button6').innerHTML = currentState["num6"][0];
+            //document.getElementById('button6').innerHTML = currentState["num6"][0];
          }
-         states.splice(states.length - 1, 1);
-         console.log("states", states);
-         var currentnum = document.getElementById('targetNumber').innerHTML;
-         console.log(currentnum);
+         document.getElementById('button6').innerHTML = currentState["num6"][0];
+
+         num1Status = currentState["num1"][1];
+         num2Status = currentState["num2"][1];
+         num3Status = currentState["num3"][1];
+         num4Status = currentState["num4"][1];
+         num5Status = currentState["num5"][1];
+         num6Status = currentState["num6"][1];
+         //states.splice(states.length - 1, 1);
+         console.log("Current State:", currentState);
+         console.log("States:", states);
       }
-      console.log(newNum)
    }
 
 
@@ -323,63 +327,31 @@ function changeClass(id) {
             setTimeout(() => { window.location.href = "end.html"; }, 1800);
          }
          console.log("WIN!!");
+         //document.getElementById("nextButton").style.visibility = "visible";
          //nextGame();
+         win = true;
 
 
+      } else {
+         //document.getElementById("nextButton").style.visibility = "hidden";
+         //document.getElementById("nextButton").style.display = "none";
       }
 
    });
 
+   if(win == false) {
+      document.getElementById("nextButton").style.visibility = "hidden";
+   } else {
+      document.getElementById("nextButton").style.visibility = "visible";
+      console.log("in winner");
+   }
+
+   document.getElementById('score').innerHTML = score;
+
    console.log("13: " + num1);
 }
 
-/*const games = require('./database');
 
-function getRandomGame() {
-   const randomIndex = Math.floor(Math.random() * games.length);
-   return games[randomIndex].game;
-}*/
-
-/*fetch('./database.js')
-  .then(response => response.json())
-  .then(data => {
-    const games = data;
-
-    // Function to get a random game from the games array
-    function getRandomGame() {
-      const randomIndex = Math.floor(Math.random() * games.length);
-      return games[randomIndex].game;
-    }
-   
-    listNums = getRandomGame();
-    console.log('game got: ', listNums);
-   });
-
-function challenge() {
-   console.log(newdate);
-
-   console.log('Test nums: ', listNums);
-
-   //listNums = [343, 3, 7, 22, 14, 10, 5];
-   //listNums = getRandomGame();
-
-   targetNum = listNums[0];
-   num1 = listNums[1];
-   num2 = listNums[2];
-   num3 = listNums[3];
-   num4 = listNums[4];
-   num5 = listNums[5];
-   num6 = listNums[6];
-
-   document.getElementById("targetNumber").innerHTML = targetNum;
-   document.getElementById("button1").innerHTML = num1;
-   document.getElementById("button2").innerHTML = num2;
-   document.getElementById("button3").innerHTML = num3;
-   document.getElementById("button4").innerHTML = num4;
-   document.getElementById("button5").innerHTML = num5;
-   document.getElementById("button6").innerHTML = num6;
-
-}*/
 
 fetch('./database.js')
   .then(response => response.json())
@@ -408,49 +380,19 @@ fetch('./database.js')
       document.getElementById("button4").innerHTML = num4;
       document.getElementById("button5").innerHTML = num5;
       document.getElementById("button6").innerHTML = num6;
-      document.getElementById("star-null").checked = true;
-
     }
     challenge(); 
   });
 
   function nextGame() {
-   if(stage == 5){
-      sum = 0;
-      for (var i = 0; i < totalScore.length; i++) {
-         sum += totalScore[i];
-      }
-       location.href='end.html?data='+sum
-       return 0;
-   }
-   stage = stage + 1;
-   scoreText = document.getElementById("score").innerHTML;
-   if (scoreText != "" && scoreText != null)
-   {
-      console.log("scoreText:" + scoreText);
-      score = Number(document.getElementById("score").innerHTML.match(/\d+/)[0]) ;
-      totalScore.push(score);
-      console.log(totalScore);
-   }
-
-   if ($('#button1').hasClass('gettingUsed')) {
-      $('#button1').removeClass('gettingUsed')
-   }
-   if ($('#button2').hasClass('gettingUsed')) {
-      $('#button2').removeClass('gettingUsed')
-   }
-   if ($('#button3').hasClass('gettingUsed')) {
-      $('#button3').removeClass('gettingUsed')
-   }
-   if ($('#button4').hasClass('gettingUsed')) {
-      $('#button4').removeClass('gettingUsed')
-   }
-   if ($('#button5').hasClass('gettingUsed')) {
-      $('#button5').removeClass('gettingUsed')
-   }
-   if ($('#button6').hasClass('gettingUsed')) {
-      $('#button6').removeClass('gettingUsed')
-   }
+   win = false;
+   document.getElementById("nextButton").style.visibility = "hidden";
+   states = [];
+   currentState = {};
+   activatedStates = [];
+   currentActivated = {};
+   score += 1;
+   document.getElementById('score').innerHTML = score;
 
    fetch('./database.js')
      .then(response => response.json())
@@ -471,6 +413,50 @@ fetch('./database.js')
          num4 = listNums[4];
          num5 = listNums[5];
          num6 = listNums[6];
+
+         num1Status = true;
+         num2Status = true;
+         num3Status = true;
+         num4Status = true;
+         num5Status = true;
+         num6Status = true;
+
+         if ($('#button1').hasClass('gettingUsed')) {
+            $('#button1').removeClass('gettingUsed')
+         }
+         if ($('#button1').hasClass('gettingChanged')) {
+            $('#button1').removeClass('gettingChanged')
+         }
+         if ($('#button2').hasClass('gettingUsed')) {
+            $('#button2').removeClass('gettingUsed')
+         }
+         if ($('#button2').hasClass('gettingChanged')) {
+            $('#button2').removeClass('gettingChanged')
+         }
+         if ($('#button3').hasClass('gettingUsed')) {
+            $('#button3').removeClass('gettingUsed')
+         }
+         if ($('#button3').hasClass('gettingChanged')) {
+            $('#button3').removeClass('gettingChanged')
+         }
+         if ($('#button4').hasClass('gettingUsed')) {
+            $('#button4').removeClass('gettingUsed')
+         }
+         if ($('#button4').hasClass('gettingChanged')) {
+            $('#button4').removeClass('gettingChanged')
+         }
+         if ($('#button5').hasClass('gettingUsed')) {
+            $('#button5').removeClass('gettingUsed')
+         }
+         if ($('#button5').hasClass('gettingChanged')) {
+            $('#button5').removeClass('gettingChanged')
+         }
+         if ($('#button6').hasClass('gettingUsed')) {
+            $('#button6').removeClass('gettingUsed')
+         }
+         if ($('#button6').hasClass('gettingChanged')) {
+            $('#button6').removeClass('gettingChanged')
+         }
    
          document.getElementById("targetNumber").innerHTML = targetNum;
          document.getElementById("button1").innerHTML = num1;
@@ -479,10 +465,6 @@ fetch('./database.js')
          document.getElementById("button4").innerHTML = num4;
          document.getElementById("button5").innerHTML = num5;
          document.getElementById("button6").innerHTML = num6;
-         document.getElementById("score").innerHTML = "current score: 0 out of 5";
-         document.getElementById("star-null").checked = true;
-
-
        }
        challenge(); 
      });}
@@ -492,24 +474,3 @@ function getRandomGame(data) {
   return data[randomIndex].game;
 }
 
-function rateStarChange(){
-   console.log(score)
-   if(score != 0)
-      document.getElementById("star-"+score).checked = true;
-}
-
-function endPrompt(){
-   const urlParams = new URLSearchParams(window.location.search);
-   const sum = urlParams.get('data');
-   console.log(sum);
-   var p = document.querySelector('.winText');
-   if (sum == 25)
-      p.textContent = 'Genius!Come back tomorow for another puzzle.';
-   else if (sum < 25 && sum >=20)
-      p.textContent = 'Genius!Come back tomorow for another puzzle.';
-   else if (sum < 20 && sum >=15)
-      p.textContent = 'Good!Come back tomorow for another puzzle.';
-   else
-      p.textContent = 'Fair!Come back tomorow for another puzzle.';
-    
-}
