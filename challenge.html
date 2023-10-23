@@ -54,63 +54,28 @@
       <button class="unselectedSymbol symbolButton" id="divideButton" onclick="changeClass(this.id);"><img
             src="dividesign.png" class="divideImage"></button>
             <div>
-                  <input type="radio" name="stars" id="star-null" />
-                  <input type="radio" name="stars" id="star-1" />
-                  <input type="radio" name="stars" id="star-2" />
-                  <input type="radio" name="stars" id="star-3"  />
-                  <input type="radio" name="stars" id="star-4" />
-                  <input type="radio" name="stars" id="star-5" />
-                  <section>
-                        <label for="star-1">
-                          <svg width="25" height="24" viewBox="0 0 51 48">
-                            <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/>
-                          </svg>
-                        </label>
-                        <label for="star-2">
-                          <svg width="25" height="24" viewBox="0 0 51 48">
-                            <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/>
-                          </svg>
-                        </label>
-                        <label for="star-3">
-                          <svg width="25" height="24" viewBox="0 0 51 48">
-                            <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/>
-                          </svg>
-                        </label>
-                        <label for="star-4">
-                          <svg width="25" height="24" viewBox="0 0 51 48">
-                            <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/>
-                          </svg>
-                        </label>
-                        <label for="star-5">
-                          <svg width="25" height="24" viewBox="0 0 51 48">
-                            <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/>
-                          </svg>
-                        </label>
-                        <label for="star-null" hidden>
-                              Clear
-                            </label> 
-                      </section>
                   <span><b>Score: </b><span id="score"> 0</span></span>
                   <br>
-                  <button id="nextButton" class="play" onclick="nextGame();" style="visibility: hidden;">Next</button>
+                  <button id="nextButton" class="play" onclick="nextGame();" style="visibility: hidden; width: 100px; height: 50px;">Next</button>
             </div> 
             <br>
             <button class="play" style="background-color: grey; width: 100px; height: 50px;" onclick="showEndScreen()">Give up?</button>
   </div>
 
    <br><br><br><br>
-   <div class="title" style="font-size: 30px;">Rules:</div>
+   <div class="title" style="font-size: 30px; position: absolute; top: 90%; left: 10%;">Rules:</div>
    <div class="description" style="align-self: center;display: flex;
    justify-content: center;
    align-items: center;
-   flex-direction: column; margin: 10px;">Each puzzle has a target number and 6 individual starting numbers that you must use in mathematical calculations to try and create the target number. Each of the 6 numbers can only be used once but the answer to a given math calculation becomes a new number to use. Once you finish a puzzle, the next button can be used to randomly generate the next puzzle. You obtain more points the more of the puzzles that you solve. The objective is to get as many points as possible.</div>
-   <br style="margin-top: 30px;"><hr>
+   flex-direction: column; margin: 10px; position: absolute; top: 98%; left: 5%;">This is a game of endurance and mathematical prowess. Each puzzle has a target number and 6 individual starting numbers that you must use in mathematical calculations to try and create the target number. Each of the 6 numbers can only be used once but the answer to a given math calculation becomes a new number to use. Once you finish a puzzle, the next button can be used to randomly generate the next puzzle. You obtain more points the more of the puzzles that you solve. The objective is to get as many points as possible.</div>
+   <br style="margin-top: 30px;">
+   <hr style="position: absolute; top: 130%;">
 
    <script>challenge();</script>
 
    <div class="endScreen" style="display: none;" id="endScreen">
       <br>
-      <p class="winText">You ended with a score of <span id="endScore"> </span><br>Thank you!</p>
+      <p class="winText">You ended with a score of <span id="endScore"> </span><br>Thank you for playing!</p>
   </div>
 
   <script>

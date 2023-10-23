@@ -29,7 +29,6 @@ let currentActivated = {};
 
 let win = false;
 let score = 0;
-let starpath = 0;
 
 function main(gameNum) {
    console.log(gameNum);
@@ -188,7 +187,7 @@ function changeClass(id) {
                madeMove = true;
                console.log(newNum);
 
-               starRater(newNum);
+
                document.getElementById(id).innerHTML = newNum;
 
                setTimeout(() => { $('#' + id).removeClass('gettingChanged'); }, 1800);
@@ -283,13 +282,6 @@ function changeClass(id) {
          //states.splice(states.length - 1, 1);
          console.log("Current State:", currentState);
          console.log("States:", states);
-         
-         for(let i=1; i<=6; i++){
-            if ($('#button'+i).hasClass('selectedNum') || $('#button'+i).hasClass('gettingUsed')){
-               var curnum = Number(document.getElementById('button'+i).innerHTML);
-               starRater(curnum);
-            } 
-         }
       }
    }
 
@@ -473,8 +465,6 @@ fetch('./database.js')
          document.getElementById("button4").innerHTML = num4;
          document.getElementById("button5").innerHTML = num5;
          document.getElementById("button6").innerHTML = num6;
-         starRater(0);
-
        }
        challenge(); 
      });}
@@ -484,16 +474,3 @@ function getRandomGame(data) {
   return data[randomIndex].game;
 }
 
-
-function starRater(newNum){
-   if (newNum <= targetNum)
-      starpath = Math.floor(newNum * 5 / targetNum);
-   else
-      starpath = 5 - Math.ceil((newNum - targetNum) / targetNum);
-      starpath = starpath >= 0 ? starpath : 0; 
-   if(starpath != 0)
-      document.getElementById("star-"+starpath).checked = true;
-   else
-      document.getElementById("star-null").checked = true;
-
-}
